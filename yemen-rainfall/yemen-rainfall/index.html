@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Yemen Rainfall Forecasting and Alert System</title>
+<style>
+:root{--navy:#0b2545;--rain:#1d7fc4;--teal:#12908e;--bg:#f2f6f9;--card:#fff;--ink:#14243a;--mute:#52657d;--line:#d5dfe9;--g:#1f8a4c;--y:#c79a00;--o:#d9702a;--r:#c4302b;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--navy:#8cc3ee;--bg:#0c1624;--card:#13243a;--ink:#e6eef7;--mute:#9fb2c8;--line:#27405d;--rain:#4aa3e6;--teal:#3cc2bd}}
+*{box-sizing:border-box}html{scroll-padding-top:70px}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 "Segoe UI",system-ui,-apple-system,sans-serif;overflow-x:hidden}
+header{position:sticky;top:0;z-index:5;background:#0b2545;color:#fff;padding:.5rem 1rem;display:flex;flex-wrap:wrap;gap:.5rem 1.5rem;align-items:center}
+header b{font-size:1rem}nav{display:flex;gap:.25rem;flex-wrap:wrap}
+nav a{color:#cfe3f6;text-decoration:none;padding:.55rem .9rem;border-radius:6px;min-height:44px;display:inline-flex;align-items:center}
+nav a[aria-current=page]{background:#1d7fc4;color:#fff}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #f5b700;outline-offset:2px}
+main{max-width:1120px;margin:0 auto;padding:1.25rem 1rem 3rem}
+section[hidden]{display:none}
+h1{font-size:clamp(1.5rem,4.5vw,2.4rem);line-height:1.2;margin:.2rem 0 .8rem;color:var(--navy);letter-spacing:-.01em}
+h2{font-size:1.3rem;color:var(--navy);margin:0 0 .6rem}h3{font-size:1.05rem;margin:.2rem 0}
+.grid{display:grid;gap:1rem}.g2{grid-template-columns:repeat(auto-fit,minmax(min(100%,320px),1fr))}.g4{grid-template-columns:repeat(auto-fit,minmax(min(100%,200px),1fr))}
+.card{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:1.1rem}
+.best{border:2px solid var(--rain);background:linear-gradient(160deg,var(--card),color-mix(in srgb,var(--rain) 10%,var(--card)))}
+.mut{color:var(--mute);font-size:.92rem}.big{font-size:1.9rem;font-weight:700;color:var(--rain)}
+.tag{display:inline-block;padding:.1rem .6rem;border-radius:99px;font-size:.8rem;font-weight:600;color:#fff}
+.btn{background:var(--rain);color:#fff;border:0;border-radius:8px;padding:.7rem 1.2rem;font:inherit;font-weight:600;min-height:44px;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center}
+.btn.alt{background:transparent;color:var(--rain);border:2px solid var(--rain)}
+.wrap{overflow-x:auto}table{border-collapse:collapse;width:100%;min-width:520px}
+th,td{padding:.5rem .7rem;border-bottom:1px solid var(--line);text-align:right;white-space:nowrap}th:first-child,td:first-child{text-align:left}
+tr.hl td{background:color-mix(in srgb,var(--rain) 14%,transparent);font-weight:600}
+.ns{color:var(--mute);font-style:italic}
+form{display:grid;gap:.9rem;grid-template-columns:1fr}@media(min-width:700px){form{grid-template-columns:1fr 1fr}.full{grid-column:1/-1}}
+label{font-weight:600;display:block;margin-bottom:.2rem;font-size:.95rem}
+input,select{width:100%;font:inherit;padding:.6rem;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);min-height:44px}
+input[readonly]{background:color-mix(in srgb,var(--teal) 10%,var(--card))}
+.err{color:var(--r);font-size:.88rem;min-height:1.1em}
+.hint{background:color-mix(in srgb,var(--teal) 12%,var(--card));border-left:4px solid var(--teal);padding:.6rem .8rem;border-radius:6px;font-size:.92rem}
+.warn{border-left-color:var(--o);background:color-mix(in srgb,var(--o) 12%,var(--card))}
+.bar{display:grid;grid-template-columns:minmax(90px,150px) 1fr 70px;gap:.5rem;align-items:center;margin:.35rem 0;font-size:.9rem}
+.trk{background:var(--line);border-radius:5px;height:18px;overflow:hidden}.fill{height:100%;background:var(--mute)}.bar.hl .fill{background:var(--rain)}.bar.hl{font-weight:700}
+.lv{display:flex;gap:.6rem;align-items:flex-start;margin:.4rem 0}.dot{width:14px;height:14px;border-radius:50%;flex:none;margin-top:.35rem}
+.res{border-left:8px solid var(--mute)}
+svg{max-width:100%;height:auto}
+.thr{display:grid;grid-template-columns:repeat(3,1fr);gap:.6rem}@media(max-width:480px){.thr{grid-template-columns:1fr}}
+</style></head><body>
+<header><b>Yemen Rainfall Forecasting</b>
+<nav aria-label="Main"><a href="#home">Home</a><a href="#prediction">Prediction</a><a href="#visualizations">Visualizations</a><a href="#methodology">Methodology</a></nav></header>
+<main>
+
+<section id="home">
+<p class="mut">Study area: Yemen only</p>
+<h1>Enhanced Multivariate Rainfall Forecasting Using Deep Learning with an Intelligent Rainfall Alert System</h1>
+<div class="grid g2">
+<div class="card best"><h2>Best model: iTransformer</h2>
+<p class="mut">The only model deployed for predictions. Reported on the test split (dates after 2020-12-31).</p>
+<div class="grid g4" id="hm"></div>
+<p class="mut" id="scalenote"></p>
+<a class="btn" href="#prediction">Open prediction workspace</a></div>
+<div class="card"><h2>Study area</h2>
+<svg viewBox="0 0 300 170" role="img" aria-label="Schematic outline of Yemen's location on the Arabian Peninsula">
+<rect width="300" height="170" rx="8" fill="color-mix(in srgb,var(--rain) 15%,transparent)"/>
+<path d="M20 20 L150 14 L260 52 L286 92 L200 112 L120 146 L60 130 L40 90 Z" fill="color-mix(in srgb,var(--navy) 18%,transparent)" stroke="var(--mute)" stroke-dasharray="4 3"/>
+<path d="M90 92 L200 78 L232 98 L170 118 L112 132 Z" fill="var(--teal)" opacity=".75"/>
+<text x="130" y="108" font-size="13" fill="#fff" font-weight="700">Yemen</text></svg>
+<p class="mut"><b>Schematic only.</b> This is not a GIS map and its shapes are not accurate boundaries. Verified admin-2 boundaries (318 regions) can replace it later.</p></div></div>
+<div class="grid g2" style="margin-top:1rem">
+<div class="card"><h2>Four-model comparison (R²)</h2><div id="hbars"></div><p class="mut">Provisional values; see Visualizations for caveats.</p></div>
+<div class="card"><h2>Rainfall alert levels</h2><div id="hlv"></div><p class="mut">Project-defined thresholds, not official warning criteria.</p></div></div>
+</section>
+
+<section id="prediction" hidden>
+<h1>Prediction workspace</h1>
+<div id="mode" class="hint warn" role="status">Checking for iTransformer backend…</div>
+<div class="grid g2" style="margin-top:1rem">
+<div class="card"><h2>Observation</h2>
+<form id="f" novalidate>
+<div class="full"><label for="date">Observation date</label><input id="date" type="date" required aria-describedby="e_date"><div class="err" id="e_date"></div></div>
+<div><label for="pcode">PCODE / region index</label><input id="pcode" type="number" list="pl" min="0" max="317" step="1" required inputmode="numeric" aria-describedby="e_pcode"><datalist id="pl"></datalist><div class="err" id="e_pcode"></div></div>
+<div><label for="year">Year (from date)</label><input id="year" readonly></div>
+<div><label for="rfh">rfh: 10-day rainfall (mm)</label><input id="rfh" type="number" step="any" required aria-describedby="e_rfh"><div class="err" id="e_rfh"></div></div>
+<div><label for="r1h">r1h: 1-month rainfall (mm)</label><input id="r1h" type="number" step="any" required aria-describedby="e_r1h"><div class="err" id="e_r1h"></div></div>
+<div><label for="r3h">r3h: 3-month rainfall (mm)</label><input id="r3h" type="number" step="any" required aria-describedby="e_r3h"><div class="err" id="e_r3h"></div></div>
+<div><label for="month">Month (from date)</label><input id="month" readonly></div>
+<div><label for="dekad">Dekad (from date)</label><input id="dekad" readonly></div>
+<div class="full hint" id="hint" aria-live="polite">Click a field for guidance.</div>
+<div class="full"><button class="btn" type="submit">Predict next-dekad rainfall</button></div>
+</form></div>
+<div>
+<div class="card res" id="out" aria-live="polite"><h2>Result</h2><p class="mut">Submit an observation to see the forecast, alert level and explanation.</p></div>
+</div>
+<div class="card" style="margin-top:1rem"><h2>Derived features</h2><div class="wrap"><table id="dt"></table></div></div></div></div>
+</section>
+
+<section id="visualizations" hidden>
+<h1>Model evaluation dashboard</h1>
+<div class="card"><h2>Metric matrix</h2><div class="wrap"><table id="mt"></table></div>
+<p class="mut" id="mdesc"></p></div>
+<div class="grid g2" style="margin-top:1rem" id="charts"></div>
+<div class="card" style="margin-top:1rem"><h2>Validation / trial loss</h2><p class="ns" id="loss"></p></div>
+<div class="hint warn" style="margin-top:1rem" role="note"><b>Read with care.</b> Comparisons are meaningful only when every model uses the same evaluation split and target scale. The iTransformer figures come from the notebook's test split after inverse MinMax scaling of log1p(rfh). Origin of the LSTM, GRU and Transformer Encoder figures is not documented here, and LSTM/GRU MAE looks lower than iTransformer's while their R² is far lower, which suggests different scales. Edit <code>CONFIG.models</code> in this file when consistent results exist.</div>
+</section>
+
+<section id="methodology" hidden>
+<h1>Methodology</h1>
+<div class="card"><h2>Where each value comes from</h2><div class="wrap"><table id="src"></table></div></div>
+<div class="grid g2" style="margin-top:1rem">
+<div class="card"><h3>Temporal features</h3><p>month_sin = sin(2π·month/12), month_cos = cos(2π·month/12), dekad_sin = sin(2π·dekad/3), dekad_cos = cos(2π·dekad/3). The training data stores dekad as the starting day (1, 11 or 21), and the same value is used in the formulas, so the app derives it from the day of month.</p></div>
+<div class="card"><h3>Historical lags and window</h3><p>rfh_lag_1, 2, 3, 6 and 12 are earlier raw rfh values of the same PCODE (not log-transformed in training). The model reads a 24-dekad window, so the backend needs at least 35 consecutive prior dekads for the chosen PCODE.</p></div>
+<div class="card"><h3>Regional encoding and preprocessing</h3><p>PCODE is an integer index (0–317) feeding a learned 32-dimensional embedding. rfh, r1h and r3h are log1p-transformed, then 14 features are MinMax-scaled with scalers fitted on data up to 2015-12-31. The target is scaled by its own scaler.</p></div>
+<div class="card"><h3>Inference and alerts</h3><p>Feature order: rfh, r1h, r3h, rfh_lag_1/2/3/6/12, month_sin, month_cos, dekad_sin, dekad_cos, month, dekad. The iTransformer treats each feature as a token across 24 steps. The output is inverse-scaled, then expm1 converts it to millimetres for the <b>next dekad</b>. That millimetre value is compared with the editable thresholds.</p></div></div>
+<div class="card" style="margin-top:1rem"><h3>Deployment architecture and backend contract (v1.0)</h3>
+<p>Browser (this page, static) → HTTP JSON → Python server (<code>server.py</code>) → iTransformer checkpoint, fitted scalers and historical series. The browser never computes a forecast. Alerts are applied in the browser to the returned millimetre value, using the editable thresholds.</p>
+<p><code>GET /api/health</code> returns <code>{contract_version, model, seq_len, model_loaded, missing[], error}</code>.<br>
+<code>POST /api/predict</code> takes <code>{date, pcode, rfh, r1h, r3h}</code> (year, month, dekad and sin/cos values are also sent, but the server recomputes them). Success returns <code>{predicted_mm, unit, target_date, window}</code>. Errors return <code>{code, error}</code> with <code>VALIDATION_ERROR</code> (400), <code>MODEL_NOT_LOADED</code> (503) or <code>INFERENCE_ERROR</code> (500).</p>
+<p>To use another host, set <code>CONFIG.apiBase</code> in <code>index.html</code>. Any server that honours this contract can replace <code>server.py</code>.</p></div>
+</section>
+</main>
+<script>
+/* ===== CONFIG: edit here (metrics, thresholds, backend) ===== */
+const CONFIG={
+ apiBase:location.protocol==="file:"?"http://localhost:8000":"",   // works from file:// or from server.py
+ pcodeCount:318,
+ thresholds:{yellow:10,orange:30,red:60},      // project-defined, mm per dekad; edit here, no form needed
+ models:[                                       // null = not supplied (never estimated)
+  {name:"iTransformer",rmse:0.0885,mae:0.0629,r2:0.7703,best:true},
+  {name:"Transformer Encoder",rmse:0.0897,mae:0.0657,r2:0.7409},
+  {name:"LSTM",rmse:0.0608,mae:0.0262,r2:0.4623},
+  {name:"GRU",rmse:0.4813,mae:0.3291,r2:0.7510}],
+ loss:null,                                     // e.g. {iTransformer:[...epoch val losses]}
+ desc:{RMSE:"Root mean squared error; lower is better.",MAE:"Mean absolute error; lower is better.","R²":"Variance explained; higher is better, 1 is perfect."},
+ units:"log1p(rainfall) after inverse MinMax scaling (iTransformer); other models' scale not documented"
+};
+const LEVELS=[{k:"green",n:"Green: Normal",c:"#1f8a4c",t:"Below the advisory threshold."},{k:"yellow",n:"Yellow: Advisory",c:"#c79a00",t:"Elevated rainfall; continue monitoring."},{k:"orange",n:"Orange: Warning",c:"#d9702a",t:"High rainfall relative to configured thresholds."},{k:"red",n:"Red: Severe",c:"#c4302b",t:"Exceeds the configured severe threshold."}];
+/* ===== Prediction service: swap this to change backend ===== */
+const Service={
+ async health(){try{const r=await fetch(CONFIG.apiBase+"/api/health");return r.ok?await r.json():null}catch(e){return null}},
+ async predict(p){const r=await fetch(CONFIG.apiBase+"/api/predict",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify(p)});const j=await r.json();if(!r.ok)throw new Error(j.error||"Backend error");return j}
+};
+/* ===== Feature derivation (training formulas) ===== */
+function derive(d){const[y,m,day]=d.split("-").map(Number);const dk=day<=10?1:day<=20?11:21;
+ return{year:y,month:m,dekad:dk,month_sin:Math.sin(2*Math.PI*m/12),month_cos:Math.cos(2*Math.PI*m/12),dekad_sin:Math.sin(2*Math.PI*dk/3),dekad_cos:Math.cos(2*Math.PI*dk/3)}}
+const $=id=>document.getElementById(id),fmt=(v,d=4)=>v==null?'<span class="ns">Not supplied</span>':(+v).toFixed(d);
+function level(mm){const t=T();return mm>=t.red?3:mm>=t.orange?2:mm>=t.yellow?1:0}
+function banner(l){const tc=l.k==="yellow"?"#1a1400":"#fff";return`<div role="alert" style="background:${l.c};color:${tc};padding:.9rem 1rem;border-radius:8px;margin:.6rem 0"><b style="font-size:1.25rem">${l.n}</b><div>${l.t}</div></div>`}
+function strip(i){return`<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:.35rem;margin:.4rem 0" aria-label="Alert scale">`+LEVELS.map((l,k)=>`<div style="background:${l.c};color:${l.k==="yellow"?"#1a1400":"#fff"};opacity:${i<0||k===i?1:.3};padding:.4rem .2rem;border-radius:6px;text-align:center;font-size:.8rem;font-weight:${k===i?800:500};${k===i?"outline:3px solid var(--ink);outline-offset:2px":""}">${l.n.split(":")[0]}</div>`).join("")+`</div>`}
+function T(){return CONFIG.thresholds}
+/* ===== Routing ===== */
+function route(){const id=["home","prediction","visualizations","methodology"].includes(location.hash.slice(1))?location.hash.slice(1):"home";
+ document.querySelectorAll("section").forEach(s=>s.hidden=s.id!==id);
+ document.querySelectorAll("nav a").forEach(a=>a.toggleAttribute("aria-current",a.hash==="#"+id)||(a.getAttribute("aria-current")||a.removeAttribute("aria-current")));
+ document.querySelectorAll("nav a").forEach(a=>a.hash==="#"+id?a.setAttribute("aria-current","page"):a.removeAttribute("aria-current"));scrollTo(0,0)}
+addEventListener("hashchange",route);
+/* ===== Home + dashboard ===== */
+const M=CONFIG.models,IT=M[0];
+$("hm").innerHTML=[["R²",IT.r2],["RMSE",IT.rmse],["MAE",IT.mae]].map(([k,v])=>`<div><div class="mut">${k}</div><div class="big">${v==null?'<span class="ns" style="font-size:1rem">Not supplied</span>':v}</div></div>`).join("");
+$("scalenote").textContent="Units: "+CONFIG.units+".";
+function bars(el,key,max){el.innerHTML=M.map(m=>{const v=m[key];return`<div class="bar${m.best?' hl':''}"><span>${m.name}</span><div class="trk" role="img" aria-label="${m.name} ${key}: ${v==null?'not supplied':v}">${v==null?'':`<div class="fill" style="width:${Math.min(100,v/max*100)}%"></div>`}</div><span>${v==null?'<span class="ns">n/a</span>':v.toFixed(4)}</span></div>`}).join("")}
+bars($("hbars"),"r2",1);
+$("hlv").innerHTML=LEVELS.map(l=>`<div class="lv"><span class="dot" style="background:${l.c}"></span><div><b>${l.n}</b><div class="mut">${l.t}</div></div></div>`).join("");
+$("mt").innerHTML="<tr><th>Model</th><th>RMSE</th><th>MAE</th><th>R²</th></tr>"+M.map(m=>`<tr class="${m.best?'hl':''}"><td>${m.name}${m.best?' (deployed)':''}</td><td>${fmt(m.rmse,4)}</td><td>${fmt(m.mae,4)}</td><td>${fmt(m.r2,4)}</td></tr>`).join("");
+$("mdesc").textContent=Object.entries(CONFIG.desc).map(([k,v])=>k+": "+v).join(" ");
+$("charts").innerHTML=[["r2","R² (higher is better)",1],["rmse","RMSE (lower is better)",.12],["mae","MAE (lower is better)",.12]].map(([k,t,mx])=>`<div class="card"><h3>${t}</h3><div id="c_${k}"></div></div>`).join("");
+[["r2",1],["rmse",.12],["mae",.12]].forEach(([k,mx])=>bars($("c_"+k),k,mx));
+$("loss").textContent=CONFIG.loss?"":"Validation and trial loss were not supplied for any model. The notebook prints per-epoch validation loss but its output is not saved in the file provided.";
+$("src").innerHTML="<tr><th>Feature</th><th>Origin</th></tr>"+[["rfh, r1h, r3h","Entered by user"],["PCODE","Entered by user (index 0–317)"],["year, month, dekad, month_sin/cos, dekad_sin/cos","Calculated from the date"],["rfh_lag_1, 2, 3, 6, 12 and the 24-step window","Derived from stored historical records"],["Predicted rainfall (mm), alert level","Produced by trained iTransformer, then thresholds"]].map(r=>`<tr><td style="white-space:normal">${r[0]}</td><td style="white-space:normal;text-align:left">${r[1]}</td></tr>`).join("");
+/* ===== Prediction form ===== */
+$("pl").innerHTML=Array.from({length:CONFIG.pcodeCount},(_,i)=>`<option value="${i}">`).join("");
+const HINTS={date:"Use a dekad start date (the 1st, 11th or 21st; other days are snapped to the nearest earlier one). The backend needs chronological history for this PCODE ending at this date.",pcode:"Must match the original training mapping (index 0–317, from sorted PCODE codes). Check against pcode_map.json from prepare_artifacts.py. All observations must share one PCODE and date.",rfh:"Enter millimetres. Negative values and missing-value codes such as -999 are rejected.",r1h:"Enter millimetres, same PCODE and date as rfh. No negatives or -999.",r3h:"Enter millimetres, same PCODE and date as rfh. No negatives or -999.",month:"",dekad:"",year:""};
+document.querySelectorAll("#f input").forEach(i=>{const s=()=>{$("hint").textContent=HINTS[i.id]||"This field is calculated automatically from the date."};i.addEventListener("focus",s);i.addEventListener("input",()=>{s();check(i.id)})});
+$("hint").insertAdjacentHTML("afterend","");
+function check(id){const e=$("e_"+id);if(!e)return true;const v=$(id).value;let m="";
+ if(v==="")m="Required.";else if(["rfh","r1h","r3h"].includes(id)){if(+v<0)m="Rainfall cannot be negative.";else if([-999,-9999,9999].includes(+v))m="Looks like a missing-value code."}
+ else if(id==="pcode"&&(!Number.isInteger(+v)||+v<0||+v>=CONFIG.pcodeCount))m="Enter a whole number from 0 to "+(CONFIG.pcodeCount-1)+".";
+ if(id==="rfh"&&+v<0)m="Rainfall cannot be negative.";e.textContent=m;return!m}
+$("date").addEventListener("input",()=>{const v=$("date").value;if(!v)return;const d=derive(v);$("year").value=d.year;$("month").value=d.month;$("dekad").value=d.dekad;
+ $("dt").innerHTML="<tr><th>Feature</th><th>Value</th></tr>"+Object.entries(d).map(([k,x])=>`<tr><td>${k}</td><td>${Number.isInteger(x)?x:x.toFixed(6)}</td></tr>`).join("")+'<tr><td colspan=2 class="ns" style="text-align:left;white-space:normal">Lag features come from stored history on the backend.</td></tr>'});
+let live=null;
+function setMode(h){live=h;const m=$("mode");if(h&&h.model_loaded){m.className="hint";m.textContent="iTransformer backend connected. Predictions come from the trained checkpoint."}else{m.className="hint warn";m.textContent=!h?"Demonstration mode: server.py is not reachable, so no forecast will be produced. Run python server.py and open http://localhost:8000.":"Demonstration mode: the server is running but the model is not loaded. Missing: "+((h.missing||[]).join(", ")||h.error||"unknown")+". Add the files and submit again; no restart needed."}}
+Service.health().then(setMode);
+$("f").addEventListener("submit",async ev=>{ev.preventDefault();
+ const ok=["date","pcode","rfh","r1h","r3h"].map(check).every(Boolean);if(!ok){$("out").innerHTML="<h2>Result</h2><p>Fix the highlighted fields and try again.</p>";return}
+ const p={date:$("date").value,pcode:+$("pcode").value,rfh:+$("rfh").value,r1h:+$("r1h").value,r3h:+$("r3h").value,...derive($("date").value)};
+ const o=$("out");setMode(await Service.health());
+ if(!live||!live.model_loaded){o.innerHTML=`<h2>Result</h2><p><b>Demonstration mode.</b> No forecast was generated because the iTransformer backend is not connected. Nothing here is a model output.</p><p class="mut">The coloured alert appears here automatically once the model returns a value:</p>${strip(-1)}<details><summary>Request that would be sent</summary><pre style="white-space:pre-wrap">${JSON.stringify(p,null,1)}</pre></details>`;return}
+ o.innerHTML="<h2>Result</h2><p>Running iTransformer…</p>";
+ try{const r=await Service.predict(p),l=LEVELS[level(r.predicted_mm)];o.style.borderLeftColor=l.c;const i=level(r.predicted_mm);
+  o.innerHTML=`<h2>Result</h2><div class="big">${r.predicted_mm.toFixed(2)} mm</div><p class="mut">Predicted rainfall for the dekad starting ${r.target_date}, PCODE ${p.pcode} (iTransformer, mm per dekad)</p>${banner(l)}${strip(i)}<p>The forecast of ${r.predicted_mm.toFixed(1)} mm falls in the <b>${l.n.split(":")[0]}</b> band (yellow from ${T().yellow}, orange from ${T().orange}, red from ${T().red} mm). The alert was generated automatically from this value. Thresholds are project-defined, not official warning levels.</p><p class="mut">Window: 24 dekads ending ${p.date}.</p>`}
+ catch(e){o.innerHTML=`<h2>Result</h2><p class="err" style="font-size:1rem">${e.message}</p>`}});
+route();
+</script></body></html>
